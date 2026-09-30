@@ -1,0 +1,25 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\sk408\.cline\data\workspaces\chat\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\sk408\.cline\data\workspaces\chat
+configfile: pytest.ini
+collecting ... collected 16 items
+
+tests/test_data.py::test_prepare_shape_and_type PASSED                   [  6%]
+tests/test_data.py::test_prepare_matches_how_resnet18_was_trained PASSED [ 12%]
+tests/test_data.py::test_prepare_normalises_each_channel PASSED          [ 18%]
+tests/test_data.py::test_prepare_keeps_red_green_blue_in_that_order PASSED [ 25%]
+tests/test_data.py::test_prepare_cuts_out_the_middle PASSED              [ 31%]
+tests/test_data.py::test_prepare_accepts_grayscale_and_transparent_images PASSED [ 37%]
+tests/test_data.py::test_shapes_and_types PASSED                         [ 43%]
+tests/test_data.py::test_rows_are_prepared_images PASSED                 [ 50%]
+tests/test_data.py::test_class_names_are_sorted PASSED                   [ 56%]
+tests/test_data.py::test_labels_match_the_folder_each_image_came_from PASSED [ 62%]
+tests/test_data.py::test_broken_and_non_image_files_are_skipped PASSED   [ 68%]
+tests/test_data.py::test_same_result_every_time PASSED                   [ 75%]
+tests/test_data.py::test_split_keeps_everything PASSED                   [ 81%]
+tests/test_data.py::test_split_has_no_image_on_both_sides PASSED         [ 87%]
+tests/test_data.py::test_every_class_appears_on_both_sides PASSED        [ 93%]
+tests/test_data.py::test_split_is_repeatable PASSED                      [100%]
+
+============================= 16 passed in 4.57s ==============================
