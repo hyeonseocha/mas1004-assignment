@@ -137,7 +137,7 @@ Choose 3 to 5 categories. They have to be things you care about for some
 reason, and you have to say what that reason is.
 
 ```
-uv run python src/collect.py --classes "espresso cup,wine glass,paper coffee cup" --n 150
+uv run python src/collect.py --classes "crossbody bag,pants,tshirt" --n 150
 ```
 
 This downloads images into `data/raw/`. Then copy `data/raw` to `data/clean`
@@ -155,8 +155,18 @@ gets it wrong.
 
 Write this down:
 - Why these categories? Why do you care?
+실제 사진을 구하기가 쉬울 것 같았습니다
 - What do you think the model will actually use to tell them apart?
+Pants (바지): 세로 방향으로 길게 늘어선 두 줄의 평행한 윤곽선과 하단부까지 이어지는 픽셀 분포 특성을 사용합니다.
+
+Shirt (상의류): 어깨 선의 넓이, 소매 길이, 넥라인(V넥/라운드넥) 깊이, 중앙 버튼/지퍼 선의 경계 대비 차이로 구별합니다.
+
+Crossbody bag (가방류): 직사각형 형태의 블록 모양, 중앙부의 짙은 픽셀 밀도, 그리고 어깨끈을 형성하는 가늘고 긴 얇은 선 패턴을 기준으로 판단합니다.
 - How many images did you get for each? Show the counts.
+카테고리	이미지 수
+data/clean/crossbody_bag	150개
+data/clean/pants	189개
+data/clean/tshirt	158개
 
 ## Problem 2. Turn your folder into numbers
 
@@ -186,6 +196,8 @@ makes your numbers look better than they are.
 Write this down:
 - One of your images next to what `prepare_image` made of it. What was cut
   off? Find an image where the crop cut off part of the thing you care about.
+![Before/After Comparison](before_after_comparison.png)
+
 
 ## Problem 3. Train it and report the first result
 
