@@ -197,7 +197,12 @@ Write this down:
 - One of your images next to what `prepare_image` made of it. What was cut
   off? Find an image where the crop cut off part of the thing you care about.
 ![Before/After Comparison](before_after_comparison.png)
-
+1. 시각적 변환 과정 (Visual Changes):
+해상도 및 크기 변경: 원본 이미지(1152x1536)가 모델 입력 표준 규격인 224x224 크기로 리사이즈 및 중앙 크롭(Center Crop)되었습니다.
+주요 영역 확대 및 여백 제거: 중앙 크롭 과정에서 인물의 얼굴 상단과 여백이 잘려 나가고, 핵심 대상인 상의(Top)와 분홍색 크로스백(Crossbody bag) 영역이 화면 대부분을 차지하도록 확대되었습니다.
+2. 모델 예측에 미치는 영향 (Impact on Model Predictions):
+불필요한 배경/여백 제거: 모델 학습에 큰 영향이 없는 광범위한 배경 및 얼굴 영역이 제거되어 모델의 연산 효율성이 높아집니다.
+핵심 시각적 특징(Feature) 강조: 224x224 영역 안에서 분홍색 가방의 질감/색상 패턴, 가방 끈의 사선 라인, 검은색 상의의 실루엣 등 주요 아이템의 픽셀 점유율이 높아져 모델이 해당 대상의 특징을 훨씬 명확하게 인식할 수 있게 됩니다.
 
 ## Problem 3. Train it and report the first result
 
