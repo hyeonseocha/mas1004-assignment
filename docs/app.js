@@ -137,6 +137,7 @@ let waiting = null;
 
 async function classify(source) {
   if (!session) return;
+  if (source.videoWidth === 0) return;  // a webcam that was just turned off
   if (busy) {
     waiting = source;
     return;
@@ -199,6 +200,9 @@ async function runSelfTest(cases) {
 // ---------------------------------------------------------------------------
 
 function showPanel(which) {
+  // A webcam left running would keep replacing the answer for an uploaded
+  // picture or a drawing, so leaving its tab turns it off.
+  if (which !== "Cam") cameraOff();
   for (const name of ["Cam", "File", "Draw"]) {
     $("panel" + name).hidden = name !== which;
     $("tab" + name).classList.toggle("on", name === which);
@@ -209,32 +213,81 @@ $("tabFile").onclick = () => showPanel("File");
 $("tabDraw").onclick = () => showPanel("Draw");
 
 // Webcam
-let cameraRunning = false;
-$("camStart").onclick = async () => {
+const video = $("video");
+let stream = null;  // the camera that is on, or null when it is off
+
+// The browser hides the names of the cameras until the page has been allowed
+// to use one, so the list is filled again after every start, and whenever a
+// camera is plugged in or a virtual camera appears.
+async function listCameras() {
+  const picker = $("camPick");
+  const chosen = picker.value;
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const cameras = devices.filter((d) => d.kind === "videoinput" && d.deviceId);
+  picker.replaceChildren(new Option("Default camera", ""));
+  cameras.forEach((camera, i) => {
+    picker.add(new Option(camera.label || `Camera ${i + 1}`, camera.deviceId));
+  });
+  if (cameras.some((camera) => camera.deviceId === chosen)) picker.value = chosen;
+}
+
+async function cameraOn() {
+  const chosen = $("camPick").value;
+  $("camToggle").disabled = true;
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    const video = $("video");
-    video.srcObject = stream;
-    await video.play();
-    cameraRunning = true;
-    $("camStart").disabled = true;
-    $("camStart").textContent = "Camera is on";
-    const tick = async () => {
-      if (!cameraRunning) return;
-      await classify(video);
-      setTimeout(() => requestAnimationFrame(tick), 150);
-    };
-    tick();
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: chosen ? { deviceId: { exact: chosen } } : true,
+    });
   } catch (error) {
-    alert(
-      "The browser would not give us the camera.\n\n" +
-      "Cameras only work on https:// pages and on http://localhost. " +
-      "If you opened this file by double clicking it, run " +
-      "`python -m http.server` in this folder and open " +
-      "http://localhost:8000 instead."
-    );
+    alert(window.isSecureContext
+      ? `The browser would not give us the camera (${error.name}). Check that ` +
+        "you allowed this page to use it, and that no other program is using it."
+      : "The browser would not give us the camera.\n\n" +
+        "Cameras only work on https:// pages and on http://localhost. " +
+        "If you opened this file by double clicking it, run " +
+        "`python -m http.server` in this folder and open " +
+        "http://localhost:8000 instead.");
+    return;
+  } finally {
+    $("camToggle").disabled = false;
+  }
+  // The tab may have changed while the browser was asking for permission.
+  if ($("panelCam").hidden) return cameraOff();
+
+  video.srcObject = stream;
+  await video.play();
+  $("camToggle").textContent = "Turn the camera off";
+  await listCameras();
+  $("camPick").value = stream.getVideoTracks()[0].getSettings().deviceId || "";
+
+  const mine = stream;
+  const tick = async () => {
+    if (stream !== mine) return;  // turned off, or another camera took over
+    await classify(video);
+    setTimeout(() => requestAnimationFrame(tick), 150);
+  };
+  tick();
+}
+
+function cameraOff() {
+  if (!stream) return;
+  for (const track of stream.getTracks()) track.stop();
+  stream = null;
+  video.srcObject = null;
+  $("camToggle").textContent = "Turn the camera on";
+}
+
+$("camToggle").onclick = () => (stream ? cameraOff() : cameraOn());
+$("camPick").onchange = () => {
+  if (stream) {
+    cameraOff();
+    cameraOn();
   }
 };
+if (navigator.mediaDevices) {
+  listCameras();
+  navigator.mediaDevices.addEventListener("devicechange", listCameras);
+}
 
 // Upload
 $("file").onchange = async (event) => {

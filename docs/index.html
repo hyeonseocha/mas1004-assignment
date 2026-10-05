@@ -46,6 +46,10 @@
     cursor: pointer;
   }
   button.on { border-color: var(--accent); color: var(--accent); }
+  select {
+    font: inherit; padding: 6px 8px; border-radius: 8px; max-width: 260px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+  }
   button:disabled { opacity: .5; cursor: default; }
   .panel {
     border: 1px solid var(--line); border-radius: 12px;
@@ -95,9 +99,16 @@
     <div class="stage">
       <video id="video" width="320" height="240" autoplay playsinline muted></video>
       <div>
-        <div class="row"><button id="camStart">Turn the camera on</button></div>
+        <div class="row"><button id="camToggle">Turn the camera on</button></div>
+        <div class="row">
+          <label for="camPick">Camera</label>
+          <select id="camPick"><option value="">Default camera</option></select>
+        </div>
         <p class="hint">Nothing leaves your computer. The model runs here in
           the page.</p>
+        <p class="hint">The names of the cameras appear after you turn one on
+          for the first time. A virtual camera, such as the one in OBS, is in
+          the list too.</p>
       </div>
     </div>
   </section>

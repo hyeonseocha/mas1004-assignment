@@ -2,31 +2,109 @@
 
 MAS1004 Data & AI, 2026 Fall
 
-Due: Friday 16 October, 22:00, on LMS.
+Due: Friday 16 October, 22:00, on Cyber Campus (LMS).
 
-## What you will hand in
+## What you do
 
-A web page, on the internet, at an address you can send to anyone. It looks at
-a picture and says which of your categories it thinks it is. The picture can
-come from your webcam, from a file you upload, or from something you draw with
-the mouse. The model runs inside the page itself, so it keeps working after you
-close your laptop, and nobody's photos are sent anywhere.
+You choose 3 to 5 categories of image, collect images of them, and train a
+classifier that tells them apart. The model is ResNet18, a network that was
+already trained on ImageNet, 1.2 million photographs of 1,000 kinds of thing.
+You replace its last layer so that it answers with your categories, and train
+it further on your images. Then you put it on a web page that anyone can open,
+and find out what it actually looks at when it decides.
 
-The model is ResNet18, a network that was already trained on ImageNet, 1.2
-million photographs of 1,000 kinds of thing. You replace its last layer so that
-it answers with your categories, and train it further on images you collected,
-of categories you chose.
+Two things matter most:
 
-You will also hand in two reports. One page that you write yourself, and a long
-one that you write with your agent. More on both at the bottom.
+- Categories that come from your own interest: something you care about or
+  know well, such as a hobby, your major, or things you see every day and can
+  tell apart yourself. Please avoid categories chosen only because they are
+  easy to separate, such as cats and cars.
+- Finding out which visual features your model uses, by changing images on
+  purpose and watching its answers (Problem 7). You do this part yourself.
 
-## What you are given and what you write
+3 to 5 is the number of categories in one classifier. One model that tells
+espresso cups, wine glasses and paper coffee cups apart has 3 categories. You
+do not run three separate projects on different topics.
 
-You are given the parts where there is nothing to learn and a lot to get stuck
-on: the image downloader, the cleaning tool, the export script, the web page,
-the checker, and a test for each function you have to write.
+## What you hand in, on Cyber Campus (LMS)
 
-You write these:
+1. `links.txt`, a text file with the address of your web demo and the address
+   of your code repository, in this form:
+
+   ```
+   demo: https://<your name>.github.io/<your repository>/
+   code: https://github.com/<your name>/<your repository>
+   ```
+
+   The model runs inside the web page, so the demo works without a server, and
+   nobody's photos are sent anywhere.
+2. The short report as a PDF: one page of text written by you, and up to
+   three more pages of figures if you want them, from the template in
+   `short_report/`.
+3. The long report as a PDF: written with your agent, from the template in
+   `long_report/`.
+
+Both templates are LaTeX files that you compile on Overleaf
+(https://www.overleaf.com), with a free account. The sections "The short
+report" and "The long report" at the end of this file say how.
+
+## Getting started
+
+You need two things of your own: VS Code with Cline, as set up in class, and a
+GitHub account. Make the account at https://github.com/signup if you do not
+have one. Your agent does the rest.
+
+In VS Code, open Cline and give it this request:
+
+```
+Set up MAS1004 Assignment 1 for me. Follow the section "First setup" in
+https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/AGENTS.md
+```
+
+It makes your own copy of this repository on your GitHub account, downloads it
+to your computer, and installs what the assignment needs. On the way it asks
+you to log in to GitHub in your browser. At the end it runs the tests on the
+code you were given, six of them pass, and it tells you to open the new folder
+in VS Code. Work in that folder, with Cline, from then on.
+
+If you already made your copy in class, open its folder in VS Code and give
+Cline this request instead. Use the same request whenever the given files
+change. It does not touch the functions you wrote or your images.
+
+```
+Update the given files in this repository from the template. Follow the
+section "Updating the given files" in
+https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/AGENTS.md
+```
+
+Some computers cannot run this assignment, because PyTorch has no packages for
+them: Intel Macs, Windows laptops with an ARM processor (Snapdragon), and Macs
+older than macOS 14. Your agent tells you if yours is one of them. Then you
+train on Colab.
+
+### Google Colab
+
+Colab gives you a GPU for free, and training ResNet18 is much faster on a GPU.
+Open the notebook directly in Colab with this link:
+https://colab.research.google.com/github/jdasam/mas1004-assignment1/blob/main/assignment1_colab.ipynb
+
+Use Colab only to run things: downloading, training, cleaning and checking.
+Write your code on your own computer with your agent, and push it. The
+notebook takes your code from your repository on GitHub, so push before you
+run it, and do not edit code in Colab: the notebook replaces it with what is on
+GitHub every time it updates. When the training is done, you download the
+model files from Colab and publish the page from your own computer
+(Problem 6).
+
+## How you work
+
+`PLAN.md` is the plan for the whole assignment, step by step, with a check for
+each step. Read it, then give it to your coding agent one step at a time.
+`AGENTS.md` tells your agent how to run things in this repository. Most agents
+read it on their own.
+
+You write the bodies of these functions. Each has a docstring that says what
+goes in and what comes out, and a test that checks it.
 
 | file | functions | problem |
 |---|---|---|
@@ -35,370 +113,141 @@ You write these:
 | `src/evaluate.py` | `predict_logits`, `accuracy`, `confusion_matrix` | 3 |
 | `src/evaluate.py` | `worst_examples` | 5 |
 
-Each one has a docstring saying exactly what goes in and what comes out, and a
-test that checks it. Read the docstring, ask your agent to write the body, run
-the test, repeat until it is green.
+Everything else is given: the image downloader, the cleaning tool, the
+training script, the export script, the web page and the checker.
 
-`PLAN.md` is a plan for doing all of this, written out step by step. Give it to
-your agent one step at a time. It is a real plan of the kind you should learn
-to write yourself, so read it before you use it.
+You are responsible for everything you hand in, including what your agent
+wrote.
 
-## Getting your own copy
-
-This repository is a template, so you do not fork it and you do not work in it.
-
-1. Make an account at https://github.com if you do not have one.
-2. Open https://github.com/jdasam/mas1004-assignment1
-3. Press "Use this template", then "Create a new repository".
-4. Give it a name and keep it public. Public is what makes GitHub Pages free.
-5. `git clone` your new repository onto your own machine.
-
-Everything you do from now on happens in your copy, and you hand in its
-address. Commit and push as you go. A commit you did not push has not been
-handed in.
-
-If you made your copy on 29 September before the starter code changed to
-ResNet18 (your `src/data.py` has no `prepare_image` in it), make a new copy
-from the template and move your `data/` folder into it. Your downloaded images
-are not in git, so they do not come with the new copy on their own.
-
-If you made your copy before 1 October, it has no `pyproject.toml`. Take the
-uv setup from the template into your repository, in your repository folder:
-
-```
-git remote add template https://github.com/jdasam/mas1004-assignment1.git
-git fetch template
-git checkout template/main -- pyproject.toml uv.lock .python-version AGENTS.md CLAUDE.md .gitignore requirements.txt src/collect.py README.md PLAN.md
-git commit -m "Use uv"
-```
-
-This replaces only the files named on the third line, none of the ones you
-write.
-
-## Setting up
-
-On your own computer, use uv. It downloads the right version of Python and the
-exact version of every package this assignment needs, and puts them in a
-`.venv` folder inside your repository. You get the same versions on Windows,
-macOS and Linux, and the Python you may already have is not touched.
-
-Install uv once. On macOS, in Terminal:
-
-```
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-On Windows, in PowerShell:
-
-```
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Then close the terminal, and quit and reopen VS Code, so that they can find
-`uv`. `uv --version` should print a version number.
-
-From now on, start every command with `uv run`. In your repository folder,
-check that it is alive:
-
-```
-uv run pytest tests/test_export.py
-```
-
-The first time, this takes a few minutes, because uv downloads Python, PyTorch
-and the rest. After that it starts at once. Do not `pip install` anything, and
-do not change the versions in `pyproject.toml`: `uv.lock` holds exact versions
-that were tested together. `AGENTS.md` tells your coding agent the same, and
-most agents read it on their own.
-
-Those tests cover code that was given to you, so they should pass before you
-write a single line. If they do not, fix that first and ask for help if you
-need it. Everything else will fail until you write it.
-
-On Google Colab you do not need uv. The notebook installs everything with pip,
-and there you leave `uv run` off every command.
-
-Some computers cannot run this assignment, because PyTorch does not make
-packages for them: Intel Macs, and Windows laptops with an ARM processor
-(Snapdragon). uv stops with "not compatible with the lockfile's supported
-environments" on them. Use Colab. On a Mac with Apple Silicon, you need macOS
-14 (Sonoma) or later.
-
-Training ResNet18 is much faster on a GPU. On a laptop without one, a run of
-10 epochs on 400 images takes several minutes. Google Colab gives you a GPU
-for free, and `assignment1_colab.ipynb` sets everything up there. Open it
-directly in Colab with this link:
-https://colab.research.google.com/github/jdasam/mas1004-assignment1/blob/main/assignment1_colab.ipynb
+- Every number in your reports has to come from output that you saw printed
+  by code you ran. Agents sometimes report numbers they never measured.
+- When the agent says it fixed something, have it run the test, and look at
+  the result yourself.
+- You make the guesses and choose the image changes in Problem 7, and you
+  write the short report. The agent makes only the image changes you ask for.
 
 ---
 
 ## Problem 1. Choose your categories and collect the images
 
-Choose 3 to 5 categories. They have to be things you care about for some
-reason, and you have to say what that reason is.
+Choose 3 to 5 categories, as described at the top. The downloader searches the
+web for each category and saves the images, and you work on a copy of them.
 
-```
-uv run python src/collect.py --classes "crossbody bag,pants,tshirt" --n 150
-```
+Three things to think about when you choose.
 
-This downloads images into `data/raw/`. Then copy `data/raw` to `data/clean`
-and work on the copy, so you always have the original to go back to.
-
-Two things to think about when you choose. In Problem 5 you test the model on
-images from a source that cannot overlap with your downloads, such as your own
-photos, so choose things you can find such images of.
-And the model can only use what is visible in the picture: an expensive wine
-glass and a cheap one that look the same cannot be told apart by any model.
-Because you start from a network that has already seen 1.2 million photos,
-categories that differ in small details, such as similar breeds of dog, are
-worth trying. Choose something you would still find interesting when the model
-gets it wrong.
+- Your categories should not be ImageNet categories. `imagenet_classes.txt`
+  lists all 1,000 of them. ResNet18 has already learned to tell those apart, so
+  training it on them adds almost nothing. Things that ImageNet calls by one
+  name are a good place to look: ImageNet has a category for pizza, but not
+  for Neapolitan, New York and Chicago pizza. The cup categories used as
+  examples in this README are not a good choice for this reason: ImageNet
+  already has espresso, cup, coffee mug, goblet and red wine. They are there
+  only to show how things work.
+- In Problem 5 you test the model on images from a source that cannot overlap
+  with your downloads, such as your own photos, so choose things you can find
+  such images of.
+- The model can only use what is visible in the picture: an expensive wine
+  glass and a cheap one that look the same cannot be told apart by any model.
 
 Write this down:
 - Why these categories? Why do you care?
-실제 사진을 구하기가 쉬울 것 같았습니다
-- What do you think the model will actually use to tell them apart?
-Pants (바지): 세로 방향으로 길게 늘어선 두 줄의 평행한 윤곽선과 하단부까지 이어지는 픽셀 분포 특성을 사용합니다.
-
-Shirt (상의류): 어깨 선의 넓이, 소매 길이, 넥라인(V넥/라운드넥) 깊이, 중앙 버튼/지퍼 선의 경계 대비 차이로 구별합니다.
-
-Crossbody bag (가방류): 직사각형 형태의 블록 모양, 중앙부의 짙은 픽셀 밀도, 그리고 어깨끈을 형성하는 가늘고 긴 얇은 선 패턴을 기준으로 판단합니다.
+- What do you think the model will actually use to tell them apart: shape,
+  colour, texture, background, or something else? Write it before you train.
+  Problem 7 tests it.
 - How many images did you get for each? Show the counts.
-Category      Count
---------      -----
-crossbody_bag   150
-pants           150
-tshirt          150
 
 ## Problem 2. Turn your folder into numbers
 
-Write `prepare_image`, `load_folder` and `split_train_test` in `src/data.py`.
+Write `prepare_image`, `load_folder` and `split_train_test`. `prepare_image`
+prepares a photo exactly the way every ImageNet photo was prepared when
+ResNet18 was trained: the shorter side resized to 256, the 224 by 224 square
+in the middle cut out, and each colour channel scaled. The network can only
+read your photos if they are prepared the same way.
 
-```
-uv run pytest tests/test_data.py
-```
-
-`prepare_image` prepares one photo exactly the way every ImageNet photo was
-prepared when ResNet18 was trained: the shorter side resized to 256, the
-224 by 224 square in the middle cut out, and each colour channel scaled with
-the ImageNet mean and standard deviation. The network learned to read photos
-prepared like that, so it can only read yours if they are prepared the same
-way. The web page does the same steps in JavaScript.
-
-Your images are all different sizes and shapes, some are broken, and one of
-them is a text file that ended up with a .jpg name. That is normal. The tests
-put you through the same things.
-
-Pay attention to the test called
-`test_split_has_no_image_on_both_sides`. If the same picture is in the
-training set and the test set, your test accuracy is not a measurement, it is a
-memory. This is the single most common mistake in this assignment and it always
-makes your numbers look better than they are.
+No image may be in both the training set and the test set. If one is, your
+test accuracy measures what the model remembers, not what it learned.
 
 Write this down:
 - One of your images next to what `prepare_image` made of it. What was cut
   off? Find an image where the crop cut off part of the thing you care about.
-![Before/After Comparison](before_after_comparison.png)
-1. 시각적 변환 과정 (Visual Changes):
-해상도 및 크기 변경: 원본 이미지(1152x1536)가 모델 입력 표준 규격인 224x224 크기로 리사이즈 및 중앙 크롭(Center Crop)되었습니다.
-주요 영역 확대 및 여백 제거: 중앙 크롭 과정에서 인물의 얼굴 상단과 여백이 잘려 나가고, 핵심 대상인 분홍색 크로스백(Crossbody bag) 영역이 화면의 영역을 더 차지하도록 확대되었습니다.
-2. 모델 예측에 미치는 영향 (Impact on Model Predictions):
-불필요한 배경/여백 제거: 모델 학습에 큰 영향이 없는 광범위한 배경 및 얼굴 영역이 제거되어 모델의 연산 효율성이 높아집니다.
-핵심 시각적 특징(Feature) 강조: 224x224 영역 안에서 분홍색 가방의 질감/색상 패턴, 가방 끈의 사선 라인 등 주요 아이템의 픽셀 점유율이 높아져 모델이 해당 대상의 특징을 훨씬 명확하게 인식할 수 있게 됩니다.
 
 ## Problem 3. Train it and report the first result
 
-Write `build_model` and `train` in `src/train.py`, and `predict_logits`,
-`accuracy` and `confusion_matrix` in `src/evaluate.py`.
-
-```
-uv run pytest tests/test_train.py tests/test_evaluate.py
-uv run python src/run.py
-```
-
-`src/run.py` trains, measures, draws three pictures into `results/`, and saves
-the model there. Run it at least these three ways, plus at least one more
-setting of your own choosing, and fill in this table. Every run prints its row
-for you. Do all of this before you clean anything: the run tagged `run` is the
-"before" that Problem 4 compares against.
-
-```
-uv run python src/run.py
-uv run python src/run.py --scratch --tag scratch
-uv run python src/run.py --freeze --lr 1e-3 --tag frozen
-```
+Write `build_model`, `train`, `predict_logits`, `accuracy` and
+`confusion_matrix`. Then train at least four times, before you clean anything:
+starting from the ImageNet weights, starting from random numbers, training
+only the new last layer, and one setting of your own. Fill in this table.
 
 | tag | start | trained | epochs | lr | trainable parameters | train accuracy | test accuracy |
 |---|---|---|---|---|---|---|---|
 | | | | | | | | |
 
-`--scratch` starts from random numbers instead of the ImageNet weights, as if
-ImageNet had never happened. `--freeze` keeps every ImageNet weight as it is
-and trains only the new last layer. With so few parameters to change it needs
-larger steps, hence `--lr 1e-3`. Other useful things to change: `--epochs`,
-`--lr`, `--batch-size`.
-
 Write this down:
-- The loss curve from `results/run_curves.png`. Did the loss go down? Did it
-  keep going down, or did it flatten out?
+- The loss curve. Did the loss go down? Did it keep going down, or did it
+  flatten out?
 - Your train accuracy is higher than your test accuracy. By how much? What does
   that gap mean?
-- The confusion matrix from `results/run_confusion.png`. Which two categories
-  does it mix up most? Does that surprise you?
+- The confusion matrix. Which two categories does it mix up most? Does that
+  surprise you?
 - The same images, the same code, and the same number of epochs, starting from
   ImageNet and starting from random numbers. How far apart are the two test
   accuracies? Why do you think that is?
-- `--freeze` trains about 0.01% of the parameters. How close does it get to
-  training all of them?
+- Training only the last layer changes about 0.01% of the parameters. How
+  close does it get to training all of them?
 
 ## Problem 4. Clean your data and train again
 
-This is the most important problem in the assignment.
+Every downloaded image got its label from a search engine. You typed "wine
+glass", and whatever came back is now called `wine_glass`: drawings, product
+catalogues, charts, photos of a bar, the same picture four times with
+different watermarks. The model learns all of them as true examples, and your
+test set contains them too.
 
-Every image in `data/clean` got its label from a search engine. You typed
-"wine glass", and whatever came back is now called `wine_glass`: drawings,
-product catalogues, charts about types of wine glass, photos of a bar, the same
-picture four times with different watermarks. The model learns every one of
-them as a true example of its class. Your test set is cut from the same folder,
-so it contains them too, and part of your test accuracy measures how well the
-model agrees with the search engine.
+Only you know what you meant by each category, so you write a rule first and
+then decide each image by it. "I removed pictures where the object was not the
+main thing in the frame" is a rule. "I removed the ones that looked wrong" is
+not. Look at every image yourself. The cleaning tool also lists the images that
+look least like the rest of their class, and pairs of near copies, but a
+suspect is not automatically junk: decide it by your rule.
 
-Nobody can clean your data for you, because only you know what you meant by
-each category. That is why you write the rule first.
-
-`src/clean.py` is given to you for this problem. It works without any of the
-code you wrote.
-
-### 1. Look at every image
-
-```
-uv run python src/clean.py look
-```
-
-This draws every image in `data/clean` onto sheets in
-`results/cleaning/look/`, with its file name under it. Open every sheet and
-look at every picture. Note down the kinds of thing that should not be there.
-
-### 2. Write your rule
-
-Write down your rule before you remove anything, and follow it. "I removed
-pictures where the object was not the main thing in the frame" is a rule.
-"I removed the ones that looked wrong" is not.
-
-### 3. Ask the rest of your data
-
-```
-uv run python src/clean.py suspects
-```
-
-For every image, this trains a small classifier on all the other images and
-asks it what this one is. An image whose own label gets a low probability looks
-unlike the rest of its class. `results/cleaning/suspects/<class>.png` shows
-those images for each class, the most suspicious first.
-
-`results/cleaning/suspects/copies.png` shows pairs of near copies: the same
-picture resized, cropped a little, or saved again with a different watermark.
-Downloaded images are full of them. If one copy ends up in your training set and
-the other in your test set, the model passes the test by remembering, and your
-test accuracy is higher than it should be. Keep one of each pair.
-
-A suspect is not automatically junk. Some are good photos that are just
-unusual, and those are exactly the ones your model needs most. Decide each one
-by your rule.
-
-### 4. Remove what breaks your rule
-
-```
-uv run python src/clean.py remove wine_glass/0063.jpg wine_glass/0069.jpg --reason "chart, not a photo"
-```
-
-This moves the files out of `data/clean` into `data/removed/` and records the
-reason. Nothing is deleted, and nothing is changed in `data/raw`. Use this
-rather than deleting files by hand, so that the counts in the next step are
-right.
-
-### 5. Count, train again, and compare fairly
-
-```
-uv run python src/clean.py count
-uv run python src/run.py --tag clean
-uv run python src/check.py --compare run clean
-```
-
-Cleaning changed your test set as well as your training set, because some of
-the junk you removed was in the test set. So the test accuracy before and after
-cleaning is measured on different images, and the two numbers cannot simply be
-compared. Your new images from Problem 5 did not change, so `--compare`
-measures both saved models on them. Collect them before you get to this step.
+Cleaning changes your test set too, so compare the models before and after
+cleaning on your new images from Problem 5, which do not change.
 
 Write this down:
 - Your rule, in one or two sentences, as you wrote it before you started.
 - Three kinds of junk you found, with one picture of each.
-- The table that `python src/clean.py count` prints.
+- The table of how many images you removed from each class, and why.
 - How many near copies it found, and what you did with them.
 - Of the first 20 suspects in each class, how many did you remove? Did the
   suspects include junk you had missed when you looked yourself? Did you find
   junk that it did not list?
 - The test accuracy before and after, and the accuracy on your new images
-  before and after, from `--compare`. If a number went down, say so and think
-  about why. That happens, and an honest explanation is worth more than a good
-  number.
+  before and after. If a number went down, say so and think about why. That
+  happens, and an honest explanation is worth more than a good number.
 
 ## Problem 5. Test it on images from a new source
 
-Everything so far used images from one search. Your test set came from the
-same download as your training set, so it shares its habits: the same kind of
-product photo, the same white backgrounds, sometimes the very same picture
-twice. Now test the model on images from somewhere else.
+Your test set came from the same search as your training set, so it shares its
+habits: the same kind of product photo, the same white backgrounds. Now test
+the model on images from somewhere else.
 
 Collect at least 5 images per category from a source that you can be sure is
-not in your downloaded images, and put them in `data/new_images/<category>/`,
-using exactly the category names from your training folders. Collect them
-early, because Problem 4 uses them too.
+not in your downloads: photographs you take yourself, photographs a friend
+took, frames from a video you recorded, or photos from your phone's gallery.
+Images from the web are fine too, as long as you are sure the search that made
+your downloads could not have found them. The overlap check compares your new
+images with your downloads and shows any near copies.
 
-Save them as JPEG or PNG. An iPhone saves photos as HEIC (`.heic`) unless you
-change it, and the code here cannot read HEIC. On the iPhone, Settings,
-Camera, Formats, Most Compatible makes it save JPEG from then on. Photos you
-already took in HEIC have to be converted to JPEG, which your coding agent can
-do for you. `check.py` tells you if it finds a HEIC file.
-
-What counts as such a source is up to you, as long as you can say why none of
-its images can be among your downloads. Some that work:
-- photographs you take yourself, which is the simplest
-- photographs a friend took and sent you
-- frames from a video you recorded
-- photos from your own phone's gallery
-
-Another search engine, or another search phrase, does not work. The same
-product photos are copied onto every shopping site, so a second search brings
-back many of the pictures you already have. Check with:
-
-```
-uv run python src/clean.py overlap
-```
-
-It compares every new image with every image you downloaded and draws the near
-copies into `results/cleaning/overlap.png`. Any it finds are not new: take
-them out of `data/new_images`, and think about whether the rest of that source
-is really separate.
-
-Then write `worst_examples` in `src/evaluate.py`, put your cleaned model on
-your page, and run the checker:
-
-```
-uv run python src/export_web.py --tag clean
-uv run python src/check.py
-```
-
-`check.py` measures the model that is now on your page on your new images, and
-prints a confusion matrix and the mistakes it was most confident about.
+Save them as JPEG or PNG. An iPhone saves photos as HEIC unless you set
+Settings, Camera, Formats to Most Compatible, and the code here cannot read
+HEIC. Your agent can convert ones you already took.
 
 Your accuracy here will probably be worse than your test accuracy from
-Problem 3. That is not a mistake you made. Explaining it is the assignment. If
-it is not worse, the images it does get wrong are still the ones to explain.
+Problem 3. That is not a mistake you made. Explaining it is the assignment.
 
 Write this down:
 - Where your new images came from, and why you are sure none of them are among
-  your downloads. The output of `python src/clean.py overlap`.
+  your downloads. The output of the overlap check.
 - The accuracy on your downloaded test set and the accuracy on your new images,
   side by side.
 - Five mistakes it was confident about, with the pictures. For each one, what
@@ -408,102 +257,129 @@ Write this down:
 
 ## Problem 6. Put the demo on the web
 
-`src/export_web.py` wrote everything the page needs into `docs/`. Look at it
-first on your own machine:
+Ask your agent to export your cleaned model to the page and open the page on
+your own computer. If you trained on Colab, bring the three model files from
+Colab first (the last section of the notebook). The badge at the top of the
+page has to be green. A red badge means the page prepares images differently
+from your `prepare_image`, and every answer on it is wrong.
 
-```
-uv run python -m http.server -d docs 8000
-```
-
-and open http://localhost:8000. Opening `index.html` by double clicking will
-not work, and neither will the webcam, because browsers only allow cameras on
-`https://` pages and on `localhost`.
-
-Check the badge at the top of the page. If it is red, the page is preparing
-images differently from the way your `prepare_image` prepared them for
-training, and the demo is lying to you. Fix that before you publish.
-
-Then commit and push, and turn on GitHub Pages: your repository, Settings,
-Pages, then Source "Deploy from a branch", Branch `main`, Folder `/docs`, Save.
-Your demo appears at `https://<your name>.github.io/<your repository>/` after a
-minute or two. The first time you look it is often a 404. Wait and reload.
-
-The folder is called `docs` for exactly this reason. GitHub Pages publishes a
-folder with that name and no other configuration.
-
-`docs/model.onnx` is about 45 MB. Every time you commit a new one, another
-45 MB goes into the history of your repository, so export and commit only the
-model you want to publish, not every experiment. Check that `docs/model.onnx`
-really is in your repository on the GitHub website. If you only see
-`index.html` and `app.js`, you trained a model but never committed it, and your
-published page will not load.
+Then ask your agent to push and to turn on GitHub Pages. Your demo appears at
+`https://<your name>.github.io/<your repository>/` after a minute or two.
+Open it on your phone to check that it works away from your computer.
 
 Write this down:
 - Your GitHub Pages address.
 - One sentence on what happens when you show it something that is none of your
   categories.
 
+## Problem 7. Find out what your model looks at
+
+This is the most important problem in the assignment.
+
+In Problem 1 you wrote down what you thought the model would use to tell your
+categories apart. Now you have a trained model and you have seen its mistakes.
+In this problem you change images on purpose and see how its answers change,
+to find out what it actually uses.
+
+Do this part yourself, not by handing it to your agent. You look at the images
+and the mistakes, you make the guess, and you choose the change that tests it.
+The agent only makes the changes you ask for.
+
+1. Write down a guess that is specific enough for an image change to prove it
+   wrong. "It uses the shape" is too vague. "It tells a wine glass from an
+   espresso cup by the long stem" can be tested.
+2. Choose the change that would show whether the guess is right, and the images
+   to change. Some kinds of change, depending on the guess:
+   - one part of the object: cover that part with a plain grey box, or crop it
+     out
+   - the background: put the same object on a different background
+   - colour: turn the image grayscale, or shift its colours
+   - fine texture: blur the image
+3. Ask your agent for exactly that change, on images you name. For example:
+   "Make a copy of each image in data/new_images/wine_glass with the bottom
+   third covered by a grey rectangle, and save the copies in
+   data/changed/wine_glass_no_stem."
+4. Upload the original and the changed images to your demo page and compare
+   its answers. The page also shows the square the model actually sees. Check
+   that the part you changed is inside it.
+5. Use several images for each change, not one. A single image can change its
+   answer for reasons that have nothing to do with your guess.
+
+A result that goes against your guess tells you as much as one that supports
+it. Write it down, and make a new guess from it.
+
+Write this down:
+- Each guess, and what in your images or your model's mistakes made you think
+  of it.
+- For each change: the images you used, what you changed, why that change
+  tests the guess, and the model's answers before and after, with the original
+  and the changed images side by side.
+- The exact requests you gave your agent in this problem.
+- What you now think the model uses to tell your categories apart, and how sure
+  you are.
+
 ---
-
-## What to submit on LMS
-
-1. The address of your web demo.
-2. The address of your code repository.
-3. The short report.
-4. The long report.
-5. `data/new_images/` as a zip. Not the downloaded images, only the ones from
-   your new source.
 
 ## The short report
 
-One page. Not one and a bit. One.
+One page of text. Not one and a bit. One. After the text you may add up to
+three pages of figures.
 
 Write it yourself. No language model, at any stage, including for tidying it up
 afterwards. If Korean is your first language, write it in Korean. This is the
 one piece of work in this course where neither your English nor your polish
 counts for anything, and what you actually think counts for everything.
 
-Four questions:
+Write freely about what you learned from this assignment:
 
-1. What does your model tell apart, and why did you pick that?
-2. The worst mistake it makes. Which image, what did it answer, and what do
-   you think made it answer that?
-3. One thing your coding agent got wrong. What did it claim, what was actually
-   true, and what made you look?
-4. If you started again tomorrow, what would you do differently?
+- which topic you chose, and why
+- how the assignment went
+- what you learned
 
-On the third question: everybody's agent gets something wrong. It writes code
-that runs and does the wrong thing, or it reports an accuracy it never
-measured, or it quietly changes something you told it not to. "Nothing went
-wrong" will be read as "I did not check".
+Write it on Overleaf, from the template. Log in to Overleaf, then open one of
+these links. Each makes a new project of your own with the template in it:
+
+- [English template](https://www.overleaf.com/docs?engine=xelatex&main_document=short_report_en.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/short_report/short_report_en.tex&snip_name%5B%5D=short_report_en.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/short_report/mas1004.sty&snip_name%5B%5D=mas1004.sty)
+- [Korean template](https://www.overleaf.com/docs?engine=xelatex&main_document=short_report_ko.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/short_report/short_report_ko.tex&snip_name%5B%5D=short_report_ko.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/short_report/mas1004.sty&snip_name%5B%5D=mas1004.sty)
+
+If a link does not work, ask your agent to compress the `short_report` folder
+into a zip, and on Overleaf choose New Project, Upload Project. Either way, the compiler has to
+be XeLaTeX (Menu, Compiler). Do not use Overleaf's AI tools on this report.
+
+The first page of the template is a short guide to the LaTeX you need. Read it,
+then delete it and write your report in its place. If the text runs past one
+page, or the figures take more than three pages, a red note appears in the
+PDF.
 
 ## The long report
 
-As long as you like. Write it with your agent. That is what it is for, and it
-is the right tool for this job.
+As long as you like, written with your agent. It holds everything the "Write
+this down" boxes ask for, in order, with the pictures and the complete output
+of the checker. Every number in it has to be one you saw printed by code you
+ran.
 
-Be aware of who reads it. It will be read by a program, and by you while you
-are writing the short report. So write it for those two readers: complete,
-ordered, every number traceable. Do not write an introduction, and do not
-explain what a neural network is.
+The template is `long_report/long_report.tex`. Your agent fills it in, in your
+repository: it copies the pictures into `long_report/figures/` and saves the
+output of each command into `long_report/outputs/`, from where the report
+prints it exactly as it was. Red text in the PDF is what is still missing.
 
-It holds:
+To see the empty template on Overleaf, log in to Overleaf and open this link.
+It makes a new project of your own with the template in it:
 
-- Everything the "Write this down" boxes asked for, in the order they appear
-- Your experiment table, at least four rows
-- The pictures from `results/` for every run you refer to
-- The complete output of `python src/check.py`
-- Your cleaning rule, the output of `python src/clean.py count`, and the
-  suspects and near copies you removed or kept
-- Where your new images came from, and the output of
-  `python src/clean.py overlap`
-- The accuracy on your downloaded test set and the accuracy on your new images,
-  next to each other
+- [Long report template](https://www.overleaf.com/docs?engine=xelatex&main_document=long_report.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/long_report/long_report.tex&snip_name%5B%5D=long_report.tex&snip_uri%5B%5D=https://raw.githubusercontent.com/jdasam/mas1004-assignment1/main/long_report/mas1004.sty&snip_name%5B%5D=mas1004.sty)
+
+This project has no pictures or outputs in it. To make the PDF of your filled-in
+report, ask your agent to compress the `long_report` folder into a
+zip, and on Overleaf choose New Project, Upload Project. Set the compiler to XeLaTeX (Menu,
+Compiler) and press Recompile.
 
 ## How this is graded
 
-There are no points attached to the problems. Three things are looked at:
+There are no points attached to the problems. Four things are looked at:
 
+- Problem 7: whether your guesses come from your own images and mistakes,
+  whether each image change actually tests its guess, and what you concluded
+  from the results
 - Whether the demo works, at the address you gave, on someone else's computer
 - Whether the numbers in your long report are the ones `check.py` actually
   prints
@@ -512,26 +388,9 @@ There are no points attached to the problems. Three things are looked at:
 A model that scores 95% with no explanation is worth less than one that scores
 55% whose owner can tell you exactly which pictures it fails on and why.
 
-## Using AI coding agents
-
-Use them for the code and for the long report. That is what this course is
-about. You are responsible for what you submit: you have to be able to explain
-what you were trying to do, how you got your result, and what it means, even if
-you cannot explain every line.
-
-Three rules follow from that. Never write a number that you did not see printed
-by code you ran. When the agent says it fixed something, run the test yourself
-before you believe it. And write the short report with your own hands, because
-it is the one place where the answer has to be yours.
-
 ## When you are stuck
 
-- Run `uv run python src/check.py`. It works out the answers for itself from
-  the files on disk, so when it disagrees with your own code, one of the two
-  is wrong.
-- Read the error at the bottom of the traceback, not the top.
-- If a test fails, paste the whole test output to your agent, not your summary
-  of it.
-- `CUDA out of memory` means the batch does not fit on the GPU. Run again with
-  a smaller `--batch-size`, such as 16.
+- Ask your agent to run `src/check.py`. It works out the answers for itself
+  from the files on disk, so when it disagrees with your own code, one of the
+  two is wrong.
 - Ask in class. Both Tuesday and Thursday have time for this.
