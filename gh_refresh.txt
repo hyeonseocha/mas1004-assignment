@@ -1,0 +1,13 @@
+﻿gh.exe : 
+위치 줄:1 문자:1
++ & 'C:\Program Files\GitHub CLI\gh.exe' auth refresh -h 
+github.com -s  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [] 
+   , RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+! One-time code (B103-CE48) copied to clipboard
+Open this URL to continue in your web browser: https://gi
+thub.com/login/device

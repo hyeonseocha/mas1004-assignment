@@ -1,0 +1,17 @@
+﻿gh.exe : 
+위치 줄:1 문자:1
++ & 'C:\Program Files\GitHub CLI\gh.exe' auth login --hos
+tname github.c ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [] 
+   , RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+! One-time code (C633-1D3E) copied to clipboard
+Open this URL to continue in your web browser: https://gi
+thub.com/login/device
+??Authentication complete.
+- gh config set -h github.com git_protocol https
+??Configured git protocol
+??Logged in as hyeonseocha
